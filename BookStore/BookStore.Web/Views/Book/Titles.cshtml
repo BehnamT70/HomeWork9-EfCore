@@ -1,0 +1,27 @@
+﻿@model List<string>
+
+@{
+    ViewData["Title"] = "لیست عنوان کتاب‌ها";
+}
+
+<h2>لیست عنوان کتاب‌ها</h2>
+
+<hr />
+
+@if (Model is not null && Model.Any())
+{
+    <ol>
+        @foreach (var title in Model)
+        {
+            <li>@title</li>
+        }
+    </ol>
+}
+else
+{
+    <p>هیچ کتابی در فروشگاه ثبت نشده است.</p>
+}
+
+<a asp-action="Create" class="btn btn-secondary">
+    بازگشت
+</a>

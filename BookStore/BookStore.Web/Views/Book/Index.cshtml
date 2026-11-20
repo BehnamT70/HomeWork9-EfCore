@@ -1,0 +1,95 @@
+﻿@model BookStore.Application.Models.PagedResult<BookStore.Domain.Entities.Catalog.Book>
+
+@{
+    ViewData["Title"] = "لیست کتاب‌ها";
+}
+
+<h2>لیست کتاب‌ها</h2>
+
+<hr />
+
+@if (Model.Items is not null && Model.Items.Any())
+{
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>شناسه</th>
+                <th>عنوان</th>
+                <th>شابک</th>
+                <th>قیمت</th>
+                <th>موجودی</th>
+                <th>عملیات</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var book in Model.Items)
+            {
+                <tr>
+                    <td>@book.Id</td>
+                    <td>@book.Title</td>
+                    <td>@book.ISBN</td>
+                    <td>@book.Price</td>
+                    <td>@book.Stock</td>
+                    <td>
+                        <a asp-action="Details"
+                           asp-route-id="@book.Id"
+                           class="btn btn-info btn-sm">
+                            جزئیات
+                        </a>
+
+                        <a asp-action="Edit"
+                           asp-route-id="@book.Id"
+                           class="btn btn-warning btn-sm">
+                            ویرایش
+                        </a>
+
+                        <a asp-action="Delete"
+                           asp-route-id="@book.Id"
+                           class="btn btn-danger btn-sm">
+                            حذف
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="d-flex justify-content-between align-items-center mt-3">
+
+        <span>
+            صفحه @Model.PageNumber از @Model.TotalPages
+            | تعداد کل کتاب‌ها: @Model.TotalCount
+        </span>
+
+        <div>
+            @if (Model.HasPreviousPage)
+            {
+                <a asp-action="Index"
+                   asp-route-pageNumber="@(Model.PageNumber - 1)"
+                   asp-route-pageSize="@Model.PageSize"
+                   class="btn btn-primary">
+                    صفحه قبلی
+                </a>
+            }
+
+            @if (Model.HasNextPage)
+            {
+                <a asp-action="Index"
+                   asp-route-pageNumber="@(Model.PageNumber + 1)"
+                   asp-route-pageSize="@Model.PageSize"
+                   class="btn btn-primary">
+                    صفحه بعدی
+                </a>
+            }
+        </div>
+    </div>
+}
+else
+{
+    <p>هیچ کتابی در فروشگاه ثبت نشده است.</p>
+}
+
+<a asp-action="Create" class="btn btn-secondary mt-3">
+    بازگشت به ثبت کتاب
+</a>

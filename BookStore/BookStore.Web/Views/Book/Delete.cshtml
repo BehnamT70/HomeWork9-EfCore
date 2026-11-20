@@ -1,0 +1,39 @@
+﻿@model BookStore.Domain.Entities.Catalog.Book
+
+@{
+    ViewData["Title"] = "حذف کتاب";
+}
+
+<h2>حذف کتاب</h2>
+
+<h4>آیا از حذف این کتاب اطمینان دارید؟</h4>
+
+<div>
+    <hr />
+
+    <dl class="row">
+        <dt class="col-sm-2">عنوان کتاب</dt>
+        <dd class="col-sm-10">@Model.Title</dd>
+
+        <dt class="col-sm-2">شابک</dt>
+        <dd class="col-sm-10">@Model.ISBN</dd>
+
+        <dt class="col-sm-2">قیمت</dt>
+        <dd class="col-sm-10">@Model.Price</dd>
+
+        <dt class="col-sm-2">موجودی</dt>
+        <dd class="col-sm-10">@Model.Stock</dd>
+    </dl>
+
+    <form asp-action="Delete" method="post">
+        <input type="hidden" name="id" value="@Model.Id" />
+
+        <button type="submit" class="btn btn-danger">
+            حذف کتاب
+        </button>
+
+        <a asp-action="Index" class="btn btn-secondary">
+            انصراف
+        </a>
+    </form>
+</div>
